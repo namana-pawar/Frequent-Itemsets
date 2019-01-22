@@ -6,14 +6,22 @@ Frequent words in Yelp reviews
 SON Algorithm
 
 •	First Map Function: Take the assigned subset of the baskets and find the itemsets frequent in the subset using the simple Apriori Algorithm. As described there, lower the support threshold from s to ps if each Map task gets fraction p of the total input file. The output is a set of key-value pairs (F, 1), where F is a frequent itemset from the sample. The value is always 1 and is irrelevant.
+
 •	First Reduce Function: Each Reduce task is assigned a set of keys, which are itemsets. The value is ignored, and the Reduce task simply produces those keys (itemsets) that appear one or more times. Thus, the output of the first Reduce function is the candidate itemsets.
+
 •	Second Map Function: The Map tasks for the second Map function take all the output from the first Reduce Function (the candidate itemsets) and a portion of the input data file. Each Map task counts the number of occurrences of each of the candidate itemsets among the baskets in the portion of the dataset that it was assigned. The output is a set of key-value pairs (C, v), where C is one of the candidate sets and v is the support for that itemset among the baskets that were input to this Map task.
+
 •	Second Reduce Function: The Reduce tasks take the itemsets they are given as keys and sum the associated values. The result is the total support for each of the itemsets that the Reduce task was assigned to handle. Those itemsets whose sum of values is at least s are frequent in the whole dataset, so the Reduce task outputs these itemsets with their counts. Itemsets that do not have total support at least s are not transmitted to the output of the Reduce task.
 Apriori Algorithm
+
 •	Create a table containing support count of each item present in the bucket – cancidate set
+
 •	compare candidate set item’s support count with minimum support count (ps) this gives the itemset 
+
 •	Eliminate all the elements from the candidate set which are not frequent 
+
 •	Form combinations of 2 from the updated candidate set and repeat the process as you increase the number of elements in the combinations 
+
 •	Do the same until the candidate set is empty and no further combination can be produced 
 
 
